@@ -5,6 +5,7 @@
  */
 package javafxmvc.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.List;
@@ -13,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -90,6 +92,66 @@ public class FXMLAnchorPaneCadClientesController implements Initializable {
             lblCpfCliente.setText("");
             lblTelCliente.setText("");
         }
+    }
+    
+    @FXML
+    private void btnInserirCliente() throws IOException {
+        Cliente cliente = new Cliente();
+        boolean btnConfirmarClicked = showFXMLAnchorPaneCadClientesDialog(cliente);
+        if (btnConfirmarClicked){
+            clienteDAO.alterar(cliente);
+            carregarTableViewClientes();
+        }
+    }
+    
+    @FXML
+    private void btnAlterarCliente()throws IOException {
+        Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
+        if (cliente != null){
+            boolean btnConfirmarClicked = showFXMLAnchorPaneCadClientesDialog(cliente);
+            if (btnConfirmarClicked){
+                clienteDAO.alterar(cliente);
+                carregarTableViewClientes();
+            }
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Por favor, escolha um cliente na tabela!");
+            alert.show();
+        }
+    }
+    
+    @FXML
+    private void btnRemoverCliente() throws IOException{
+        Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
+        if (cliente != null){
+            clienteDAO.remover(cliente);
+            carregarTableViewClientes();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Por favor, escolha um cliente na tabela!");
+            alert.show();
+        }
+    }
+    
+    public boolean showFXMLAnchorPaneCadClientesDialog(Cliente cliente) throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(FXMLAnchorPaneCadClientesDialogController.class.getResource("/javafxmvc/view/FXMLAncjorPaneCadClientes.fxml"));
+        AnchorPane page = (AnchorPane) loader.load();
+        
+        //Criando um Estágio de Dialogo (Stage Dialog)
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Cadastro de Clientes");
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+        
+        //Setando o cliente no Controller.
+        FXMLAnchorPaneCadClientesDialogController controller = loader.getController();
+        controller.setDialogStage(dialogStage);
+        controller.setCliente(cliente);
+        
+        dialogStage.showAndWait();
+        
+        return controller.isBtnConfirmarClicked();
     }
     
 }

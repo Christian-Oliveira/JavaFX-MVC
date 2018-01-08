@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="234.0" prefWidth="456.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.102" fx:controller="javafxmvc.controller.FXMLAnchorPaneCadClientesDialogController">
+<AnchorPane id="AnchorPane" prefHeight="234.0" prefWidth="456.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmvc.controller.FXMLAnchorPaneCadClientesDialogController">
    <children>
       <GridPane layoutX="29.0" layoutY="28.0" prefHeight="146.0" prefWidth="364.0">
         <columnConstraints>
@@ -33,8 +32,8 @@
       </GridPane>
       <Group layoutX="248.0" layoutY="194.0">
          <children>
-            <Button fx:id="btnConfirmar" mnemonicParsing="false" text="Confirmar" />
-            <Button fx:id="btnCancelar" layoutX="83.0" mnemonicParsing="false" text="Cancelar" />
+            <Button fx:id="btnConfirmar" mnemonicParsing="false" onAction="#handleBtnConfirmar" text="Confirmar" />
+            <Button fx:id="btnCancelar" layoutX="83.0" mnemonicParsing="false" onAction="#handleBtnCancelar" text="Cancelar" />
          </children>
       </Group>
    </children>
