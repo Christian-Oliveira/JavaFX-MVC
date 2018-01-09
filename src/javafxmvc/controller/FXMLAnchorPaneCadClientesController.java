@@ -13,13 +13,17 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafxmvc.model.dao.ClienteDAO;
 import javafxmvc.model.database.Database;
 import javafxmvc.model.database.DatabaseFactory;
@@ -80,7 +84,7 @@ public class FXMLAnchorPaneCadClientesController implements Initializable {
         tableViewClientes.setItems(obsListClientes);
     }
 
-    private void selcionarItemClientes(Cliente cliente) {
+    public void selcionarItemClientes(Cliente cliente) {
         if(cliente != null){
             lblCodCliente.setText(String.valueOf(cliente.getCdCliente()));
             lblNomeCliente.setText(cliente.getNome());
@@ -95,17 +99,17 @@ public class FXMLAnchorPaneCadClientesController implements Initializable {
     }
     
     @FXML
-    private void btnInserirCliente() throws IOException {
+    public void handleBtnInserir() throws IOException {
         Cliente cliente = new Cliente();
         boolean btnConfirmarClicked = showFXMLAnchorPaneCadClientesDialog(cliente);
         if (btnConfirmarClicked){
-            clienteDAO.alterar(cliente);
+            clienteDAO.inserir(cliente);
             carregarTableViewClientes();
         }
     }
     
     @FXML
-    private void btnAlterarCliente()throws IOException {
+    public void handleBtnAlterar()throws IOException {
         Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
         if (cliente != null){
             boolean btnConfirmarClicked = showFXMLAnchorPaneCadClientesDialog(cliente);
@@ -121,7 +125,7 @@ public class FXMLAnchorPaneCadClientesController implements Initializable {
     }
     
     @FXML
-    private void btnRemoverCliente() throws IOException{
+    public void handleBtnRemover() throws IOException{
         Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
         if (cliente != null){
             clienteDAO.remover(cliente);
@@ -135,7 +139,7 @@ public class FXMLAnchorPaneCadClientesController implements Initializable {
     
     public boolean showFXMLAnchorPaneCadClientesDialog(Cliente cliente) throws IOException{
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(FXMLAnchorPaneCadClientesDialogController.class.getResource("/javafxmvc/view/FXMLAncjorPaneCadClientes.fxml"));
+        loader.setLocation(FXMLAnchorPaneCadClientesDialogController.class.getResource("/javafxmvc/view/FXMLAnchorPaneCadClientesDialog.fxml"));
         AnchorPane page = (AnchorPane) loader.load();
         
         //Criando um Estágio de Dialogo (Stage Dialog)
@@ -149,6 +153,7 @@ public class FXMLAnchorPaneCadClientesController implements Initializable {
         controller.setDialogStage(dialogStage);
         controller.setCliente(cliente);
         
+        //mostra o Dialog e espera até que o usuario feche
         dialogStage.showAndWait();
         
         return controller.isBtnConfirmarClicked();

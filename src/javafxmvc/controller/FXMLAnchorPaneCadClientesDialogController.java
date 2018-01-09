@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -78,16 +79,21 @@ public class FXMLAnchorPaneCadClientesDialogController implements Initializable 
      */
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+        this.txtNomeCliente.setText(cliente.getNome());
+        this.txtCpfCliente.setText(cliente.getCpf());
+        this.txtTelCliente.setText(cliente.getTelefone());
     }
     
     @FXML
     public void handleBtnConfirmar(){
-        cliente.setNome(txtNomeCliente.getText());
-        cliente.setCpf(txtCpfCliente.getText());
-        cliente.setTelefone(txtTelCliente.getText());
-        
-        btnConfirmarClicked = true;
-        dialogStage.close();
+        if (validarEntradaDados()){
+            cliente.setNome(txtNomeCliente.getText());
+            cliente.setCpf(txtCpfCliente.getText());
+            cliente.setTelefone(txtTelCliente.getText());
+
+            btnConfirmarClicked = true;
+            dialogStage.close();
+        }
     }
     
     @FXML
@@ -95,4 +101,28 @@ public class FXMLAnchorPaneCadClientesDialogController implements Initializable 
         dialogStage.close();
     }
     
+    private boolean validarEntradaDados() {
+        String errorMessage = "";
+        
+        if (txtNomeCliente.getText() == null || txtNomeCliente.getText().length() == 0){
+            errorMessage += "Nome Invalido!\n";
+        }
+        if (txtCpfCliente.getText() == null || txtCpfCliente.getText().length() == 0){
+            errorMessage += "CPF Invalido!\n";
+        }
+        if (txtTelCliente .getText() == null || txtTelCliente.getText().length() == 0){
+            errorMessage += "Telefone Invalido!\n";
+        }
+        
+        if (errorMessage.length() == 0){
+            return true;
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro no cadastro");
+            alert.setHeaderText("Campos Invalidos, por favor, corrija...");
+            alert.setContentText(errorMessage);
+            alert.show();
+            return false;
+        }
+    }
 }

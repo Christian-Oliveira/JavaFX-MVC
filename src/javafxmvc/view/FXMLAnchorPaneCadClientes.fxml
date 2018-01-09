@@ -52,19 +52,19 @@
                         <Label text="Nome" GridPane.rowIndex="1" />
                         <Label text="CPF" GridPane.rowIndex="2" />
                         <Label text="Telefone" GridPane.rowIndex="3" />
-                        <Label fx:id="lblCodCliente" text="Label" GridPane.columnIndex="1" />
-                        <Label fx:id="lblNomeCliente" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="lblCpfCliente" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="lblTelCliente" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="lblCodCliente" GridPane.columnIndex="1" />
+                        <Label fx:id="lblNomeCliente" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="lblCpfCliente" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="lblTelCliente" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                   <Group layoutX="154.0" layoutY="343.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
                      <children>
-                        <Button fx:id="btnInserir" mnemonicParsing="false" text="Inserir" />
-                        <Button fx:id="btnAlterar" layoutX="70.0" mnemonicParsing="false" text="Alterar" />
-                        <Button fx:id="btnRemover" layoutX="143.0" mnemonicParsing="false" text="Remover" />
+                        <Button fx:id="btnAlterar" layoutX="70.0" mnemonicParsing="false" onAction="#handleBtnAlterar" text="Alterar" />
+                        <Button fx:id="btnRemover" layoutX="143.0" mnemonicParsing="false" onAction="#handleBtnRemover" text="Remover" />
                      </children>
                   </Group>
+                  <Button fx:id="btnInserir" layoutX="126.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleBtnInserir" text="Inserir" />
                </children>
             </AnchorPane>
         </items>
