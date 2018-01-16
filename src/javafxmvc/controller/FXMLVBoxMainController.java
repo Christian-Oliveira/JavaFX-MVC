@@ -18,9 +18,9 @@ public class FXMLVBoxMainController implements Initializable {
     @FXML
     private MenuItem grafVendasMes;
     @FXML
-    private MenuItem relProdutosEstoque;
-    @FXML
     private AnchorPane anchorPane;
+    @FXML
+    private MenuItem relProdutoEstoque;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -128,8 +130,20 @@ public class FXMLAnchorPaneCadClientesController implements Initializable {
     public void handleBtnRemover() throws IOException{
         Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
         if (cliente != null){
-            clienteDAO.remover(cliente);
-            carregarTableViewClientes();
+            //Mensagem de confirma��o para apagar uma informa��o
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Deletar informação");
+            alert.setHeaderText(null);
+            alert.setContentText("Deseja apagar as informações do cliente?");
+
+            Optional<ButtonType> action = alert.showAndWait();
+
+            if (action.get() == ButtonType.OK) {
+                clienteDAO.remover(cliente);
+                carregarTableViewClientes();
+            }else{
+                alert.close();
+            }
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Por favor, escolha um cliente na tabela!");
